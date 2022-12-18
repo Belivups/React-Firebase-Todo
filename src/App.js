@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default function App(){
+    const [text, setText] = useState('')
+    const [todos, setTodos] = useState([])
+
+    function AddList(e){
+        e.preventDefault()
+
+        setTodos([
+            ...todos,
+            {title: text, id:Math.floor(Math.random()*999999), complete: false}
+        ])
+        setText('')
+    }
+
+    return(
+        <>
+            <form action="" onSubmit={AddList}>
+                <input type="text" value={text} onChange={e => {setText(e.target.value)}} />
+                <button>Add</button>
+            </form>
+
+
+            {/*Showing List Items*/}
+            <ul>
+                {todos.map(e => {
+                    return(
+                        <li key={e.id}>{e.title} </li>
+                    )
+                })}
+            </ul>
+
+
+        </>
+    )
 }
 
-export default App;
